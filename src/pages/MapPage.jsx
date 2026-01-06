@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Navbar from "../common/Navbar";
-import MapContainer from "../map/MapContainer";
-import LeftSidebar from "../sidebar/LeftSidebar";
+import Navbar from "../components/common/Navbar";
+import MapContainer from "../components/map/MapContainer";
+import LeftSidebar from "../components/map/sidebar/LeftSidebar";
 
 export default function MapPage() {
     const mapRef = useRef(null);

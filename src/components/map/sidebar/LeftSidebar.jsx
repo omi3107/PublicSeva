@@ -3,7 +3,7 @@ import { X, Filter } from "lucide-react";
 import FilterPanel from "./FilterPanel";
 import MyLocationToggle from "./MyLocationToggle";
 import PostList from "./PostList";
-import mockData from "../../data/mockData.json";
+import mockData from "../../../data/mockData.json";
 
 export default function LeftSidebar({
     isOpen,
@@ -70,9 +70,6 @@ export default function LeftSidebar({
             return matches.some((match) => match);
         });
     }, [posts, filters, hasActiveFilters]);
-
-    // Calculate counts for display
-    const totalCount = hasActiveFilters ? mockData.length : posts.length;
 
     return (
         <>
