@@ -27,8 +27,8 @@ The Map Feature is the visual centerpiece of the Community Waste Reporting Platf
 
 ### Objectives
 - ✅ Display waste hotspots as clustered markers on an interactive map (Refer uploaded image for UI)
-- ✅ Implement iPhone-style photo clustering (100-200m radius groups)
-- ✅ Enable filtering by Report ID, Severity (High Severity/Low Severity/In Progress/Resolved) and Location (Refer uploaded image for UI)
+- ✅ Implement iPhone-style photo clustering (50-100m radius groups)
+- ✅ Enable filtering by Report ID, Severity (High Severity/Low Severity/In Progress/Resolved), Status (Untouched/In Progress/Resolved) and Location (Refer uploaded image for UI)
 - ✅ Show waste hotspots post details with scrollable list of posts on the left sidebar (Refer uploaded image for UI)
 - ✅ Build in small, manageable phases for clean IDE implementation
 - ✅ Use mock data for MVP (real API integration in Phase 4)
@@ -38,7 +38,9 @@ The Map Feature is the visual centerpiece of the Community Waste Reporting Platf
 - Clusters auto-split/merge on zoom (smooth UX).
 - Left Sidebar scrollable list of waste hotspot posts and post's images have swiper to cycle through images.
 - Left Sidebar is visible on the left when citizens will click a particular waste hotspot on the map.
-- Left Sidebar should show the clicked waste hotspot post and nearby waste hotspot posts within a particular cluster radius.
+- Left Sidebar should show the clicked waste hotspot post and nearby waste hotspot posts within a particular range.
+- If the left side bar is visible, the maps size should be adjusted neatly to fit the screen.
+- Also, user can close the left side bar by clicking on the close icon.
 - All filters work in real-time without page reload.
 - Code is modular and easy to integrate with real backend API.
 - Map should be responsive and should be visible on all devices.
@@ -92,11 +94,10 @@ MapPage
 |
 |
 ├── LeftSidebar (Posts Scrollable List)
-│   ├── Filter Panel (Report ID (input text field), Severity (dropdown), Location (input text field))
+│   ├── Filter Panel (Report ID (input field), Status (dropdown), Severity (dropdown), Location (input field))
 │   └── Post Cards: (scrollable list) 
 │   └── Post's images (swiper to cycle through images)
 │   └── Post's details (Date, Report ID, Description, Location, Status, Severity, Vote count, Report count)
-│   └── Post's actions (Vote Button (Vote count) , Report Button (Report count))
 │   └── My Location Toggle (to toggle between user's location and default location)
 ```
 
@@ -110,7 +111,7 @@ MapPage
 
 ## 5. PHASED DEVELOPMENT PLAN
 
-### PHASE 1: Basic Map Setup & Mock Data (Days 1-2)
+### PHASE 1: Basic Map Setup & Mock Data 
 **Goal:** Render interactive map with clustered markers using static mock data
 
 #### Deliverables
@@ -138,6 +139,51 @@ MapPage
 5. Add zoom controls
 6. Add search bar to search for a location and view posts in that location
 7. Style markers by status (red/yellow/green)
+
+=================================================
+
+### PHASE 2: Left Sidebar - Posts List & Filters 
+**Goal:** Build left sidebar with scrollable post list and working filters
+
+### WORKING:
+1) Left Side bar is visible only when user clicks/interacts on a particular post on the map, else not visible.
+2) Once user clicks a particular post on the map, the left side bar will display the clicked post card and relevant post cards within a particular range.
+3) If the left side bar is visible, the maps size should be adjusted neatly to fit the screen.
+4) Also, user can close the left side bar by clicking on the close icon.
+
+#### Deliverables
+- ✅ Filter panel for waste hotspot posts(Report ID, Severity, Status, Location) with proper constraints on each field.
+- ✅ Real-time filtering (no page reload)
+- ✅ My Location toggle (to toggle between user's location and default location)
+- ✅ Scrollable waste hotspots post cards list
+- ✅ Posts cards with swiper to view images, date, report id, description, location, severity, status, vote count, report count
+- ✅ Click post to highlight and center view on map
+
+#### Features
+- Status filters: Untouched | In Progress | Resolved  (Drop-down)
+- Severity filters: High | Moderate | Low  (Drop-down)
+- Report ID filters: Search by Report ID (Input field)
+- Location filters: Search by location text (Input field)
+- My Location toggle: to toggle between user's location and default location  
+- Post cards: swiper to view images, date, report id, description, location, severity, status, vote count, report count
+- Active post highlight: Click card → highlight and center view on map
+
+#### Components
+(NOTE: Based on Deliverables and Features, generate appropriate components files with proper file structure)
+
+#### Tasks
+1. Left sidebar on marker click with close button.
+2. Fetch and display clicked post + nearby posts within particular range.
+3. Build filter panel: Status/Severity dropdowns, Report ID/Location search, My Location toggle.
+4. Implement real-time filtering without page reload
+5. Create PostCard with image swiper, all metadata.
+6. Click card → highlight marker on map and center view
+7. Toggle between user location and default location via Geolocation API
+8. Make PostList scrollable with fixed height
+9. Connect all components to mock data with proper filtering logic
+10. Style sidebar responsively with same color scheme as landing page.
+
+===================================================
 
 ---
 
@@ -190,11 +236,14 @@ json
 | In Progress | Yellow | #FFD93D |
 | Resolved | Green | #6BCB77 | 
 
-
 ### Marker Styling
 - *Cluster Marker:* Rounded square double-bordered. Inside double border, stack of images are displayed. When zoomed-in similar clusters are formed (iPhone Style). (Refer UI sketch for cluster marker shape)
 - *Cluster border:* Display the status color of the cluster.
 - *Hover State:* Tooltip showing report ID + description
+
+## Left Sidebar Styling
+(Refer UI sketch for left sidebar)
+
 
 ---
 
@@ -208,7 +257,6 @@ json
 | Zoom animation jank | Use CSS transitions, requestAnimationFrame for smooth UX |
 
 ---
-
 
 
 

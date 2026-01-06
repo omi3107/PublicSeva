@@ -1,9 +1,8 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback, useImperativeHandle, forwardRef } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Supercluster from "supercluster";
 import mockData from "../../data/mockData.json";
-import ZoomControls from "./ZoomControls";
 import SearchBar from "./SearchBar";
 import StatusFilter from "./StatusFilter";
 
@@ -17,7 +16,24 @@ const STATUS_COLORS = {
 // Fixed marker size for consistent anchor positioning
 const MARKER_SIZE = 70;
 
-export default function MapContainer({ statusFilter, setStatusFilter, darkMode }) {
+// Calculate distance between two coordinates in meters
+const getDistanceInMeters = (lat1, lon1, lat2, lon2) => {
+  const R = 6371e3; // Earth's radius in meters
+  const φ1 = (lat1 * Math.PI) / 180;
+  const φ2 = (lat2 * Math.PI) / 180;
+  const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+  const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
+const MapContainer = forwardRef(function MapContainer(
+  { statusFilter, setStatusFilter, darkMode, onMarkerClick, highlightedPostId },
+  ref
+) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef({});
@@ -27,12 +43,50 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
 
   const API_KEY = process.env.REACT_APP_MAPTILER_API_KEY;
 
+  // Expose methods to parent via ref
+  useImperativeHandle(ref, () => ({
+    flyToPost: (postId) => {
+      const post = mockData.find((p) => p.report_id === postId);
+      if (post && map.current) {
+        map.current.flyTo({
+          center: [post.longitude, post.latitude],
+          zoom: 15,
+          duration: 1000,
+        });
+      }
+    },
+    flyToLocation: (lat, lng) => {
+      if (map.current) {
+        map.current.flyTo({
+          center: [lng, lat],
+          zoom: 14,
+          duration: 1500,
+        });
+      }
+    },
+    getNearbyPosts: (clickedPost, radiusMeters = 500) => {
+      return mockData.filter((post) => {
+        if (post.report_id === clickedPost.report_id) return true;
+        const distance = getDistanceInMeters(
+          clickedPost.latitude,
+          clickedPost.longitude,
+          post.latitude,
+          post.longitude
+        );
+        return distance <= radiusMeters;
+      });
+    },
+  }));
+
   // Get map style based on dark mode
-  const getMapStyle = useCallback((isDark) => {
-    return isDark
-      ? `https://api.maptiler.com/maps/streets-v2-dark/style.json?key=${API_KEY}`
-      : `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`;
-  }, [API_KEY]);
+  const getMapStyle = useCallback(
+    (isDark) => {
+      return isDark
+        ? `https://api.maptiler.com/maps/streets-v2-dark/style.json?key=${API_KEY}`
+        : `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`;
+    },
+    [API_KEY]
+  );
 
   // Initialize Supercluster when data or filter changes
   useEffect(() => {
@@ -67,7 +121,7 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: getMapStyle(darkMode),
-      center: [72.8777, 19.0760], // Mumbai
+      center: [72.8777, 19.076], // Mumbai
       zoom: 12,
       pitch: 45, // 3D tilt for enhanced UI
       bearing: -17.6,
@@ -79,7 +133,10 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
     });
 
     // Add navigation control
-    map.current.addControl(new maplibregl.NavigationControl({ showCompass: true }), "bottom-right");
+    map.current.addControl(
+      new maplibregl.NavigationControl({ showCompass: true }),
+      "bottom-right"
+    );
 
     return () => {
       if (map.current) {
@@ -97,10 +154,11 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
   }, [darkMode, mapLoaded, getMapStyle]);
 
   // Create marker element
-  const createMarkerElement = useCallback((isCluster, data, count, statusColor, imageUrl) => {
-    const el = document.createElement("div");
-    el.className = "marker-container";
-    el.style.cssText = `
+  const createMarkerElement = useCallback(
+    (isCluster, data, count, statusColor, imageUrl, isHighlighted = false) => {
+      const el = document.createElement("div");
+      el.className = "marker-container";
+      el.style.cssText = `
       position: relative;
       cursor: pointer;
       width: ${MARKER_SIZE}px;
@@ -108,9 +166,10 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
       display: flex;
       flex-direction: column;
       align-items: center;
+      ${isHighlighted ? "transform: scale(1.2); z-index: 100;" : ""}
     `;
 
-    el.innerHTML = `
+      el.innerHTML = `
       <div class="count-badge" style="
         position: absolute;
         top: -10px;
@@ -134,11 +193,11 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
       <div class="marker-image" style="
         width: ${MARKER_SIZE}px;
         height: ${MARKER_SIZE}px;
-        border: 4px solid ${statusColor};
+        border: 4px solid ${isHighlighted ? "#16a34a" : statusColor};
         border-radius: 16px;
         overflow: hidden;
         background: white;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        box-shadow: ${isHighlighted ? "0 0 0 4px rgba(22, 163, 74, 0.3)," : ""} 0 4px 12px rgba(0,0,0,0.3);
         transition: transform 0.2s ease-out;
       ">
         <img src="${imageUrl}" alt="marker" style="
@@ -152,24 +211,26 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
         height: 0;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
-        border-top: 14px solid ${statusColor};
+        border-top: 14px solid ${isHighlighted ? "#16a34a" : statusColor};
         margin-top: -2px;
         filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
       "></div>
     `;
 
-    // Add hover effect
-    el.addEventListener("mouseenter", () => {
-      const img = el.querySelector(".marker-image");
-      if (img) img.style.transform = "scale(1.1)";
-    });
-    el.addEventListener("mouseleave", () => {
-      const img = el.querySelector(".marker-image");
-      if (img) img.style.transform = "scale(1)";
-    });
+      // Add hover effect
+      el.addEventListener("mouseenter", () => {
+        const img = el.querySelector(".marker-image");
+        if (img) img.style.transform = "scale(1.1)";
+      });
+      el.addEventListener("mouseleave", () => {
+        const img = el.querySelector(".marker-image");
+        if (img) img.style.transform = "scale(1)";
+      });
 
-    return el;
-  }, []);
+      return el;
+    },
+    []
+  );
 
   // Create and update markers
   const updateMarkers = useCallback(() => {
@@ -197,18 +258,29 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
         ? `cluster_${clusterData.properties.cluster_id}`
         : `point_${clusterData.properties.report_id}`;
 
-      // Check if marker already exists
-      if (markersRef.current[id]) {
-        newMarkers[id] = markersRef.current[id];
+      // Check if marker already exists and hasn't changed highlight state
+      const isHighlighted = !isCluster && clusterData.properties.report_id === highlightedPostId;
+      const existingMarker = markersRef.current[id];
+
+      if (existingMarker && existingMarker._isHighlighted === isHighlighted) {
+        newMarkers[id] = existingMarker;
         delete markersRef.current[id];
         return;
+      }
+
+      // Remove existing marker if highlight state changed
+      if (existingMarker) {
+        existingMarker.remove();
       }
 
       let el, statusColor, count, imageUrl;
 
       if (isCluster) {
         // Get all points in this cluster to determine dominant status
-        const clusterPoints = clusterRef.current.getLeaves(clusterData.properties.cluster_id, Infinity);
+        const clusterPoints = clusterRef.current.getLeaves(
+          clusterData.properties.cluster_id,
+          Infinity
+        );
         const statusCounts = { untouched: 0, in_progress: 0, resolved: 0 };
 
         clusterPoints.forEach((point) => {
@@ -222,14 +294,17 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
 
         statusColor = STATUS_COLORS[dominantStatus];
         count = clusterData.properties.point_count;
-        imageUrl = clusterPoints[0]?.properties.imageUrl || "";
+        // Use first image from images array
+        imageUrl = clusterPoints[0]?.properties.images?.[0] || "";
 
         el = createMarkerElement(true, clusterData, count, statusColor, imageUrl);
 
         // Add click handler for cluster - zoom to expansion level
         el.addEventListener("click", (e) => {
           e.stopPropagation();
-          const expansionZoom = clusterRef.current.getClusterExpansionZoom(clusterData.properties.cluster_id);
+          const expansionZoom = clusterRef.current.getClusterExpansionZoom(
+            clusterData.properties.cluster_id
+          );
           map.current.easeTo({
             center: coordinates,
             zoom: Math.min(expansionZoom, 16),
@@ -241,16 +316,17 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
         const point = clusterData.properties;
         statusColor = STATUS_COLORS[point.status];
         count = 1;
-        imageUrl = point.imageUrl;
+        // Use first image from images array
+        imageUrl = point.images?.[0] || "";
 
-        el = createMarkerElement(false, clusterData, count, statusColor, imageUrl);
+        el = createMarkerElement(false, clusterData, count, statusColor, imageUrl, isHighlighted);
 
         // Create popup for single points - shown on hover, positioned above marker
         const popup = new maplibregl.Popup({
-          anchor: 'bottom',
+          anchor: "bottom",
           offset: [0, -MARKER_SIZE - 6],
           closeButton: false,
-          closeOnClick: false
+          closeOnClick: false,
         }).setHTML(`
           <div class="marker-popup" style="font-family: system-ui, -apple-system, sans-serif;">
             <div style="padding: 8px 12px; background: ${statusColor}; color: white; font-weight: bold; border-radius: 4px 4px 0 0;">
@@ -270,15 +346,17 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
         // Create marker - viewport alignment keeps markers upright
         const marker = new maplibregl.Marker({
           element: el,
-          anchor: 'bottom',
+          anchor: "bottom",
           offset: [0, -6],
-          pitchAlignment: 'viewport',
-          rotationAlignment: 'viewport'
+          pitchAlignment: "viewport",
+          rotationAlignment: "viewport",
         })
           .setLngLat(coordinates)
           .setPopup(popup)
           .addTo(map.current);
 
+        // Store highlight state on marker
+        marker._isHighlighted = isHighlighted;
 
         let hideTimeout = null;
 
@@ -304,8 +382,16 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
         el.addEventListener("mouseenter", showPopup);
         el.addEventListener("mouseleave", hidePopup);
 
+        // Click handler for single point - open sidebar
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (onMarkerClick) {
+            onMarkerClick(point);
+          }
+        });
+
         // Keep popup open when hovering over it
-        popup.on('open', () => {
+        popup.on("open", () => {
           const popupEl = popup.getElement();
           if (popupEl) {
             popupEl.addEventListener("mouseenter", showPopup);
@@ -320,14 +406,15 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
       // Create cluster marker (no popup) - viewport alignment keeps markers upright
       const marker = new maplibregl.Marker({
         element: el,
-        anchor: 'bottom',
+        anchor: "bottom",
         offset: [0, -6],
-        pitchAlignment: 'viewport',
-        rotationAlignment: 'viewport'
+        pitchAlignment: "viewport",
+        rotationAlignment: "viewport",
       })
         .setLngLat(coordinates)
         .addTo(map.current);
 
+      marker._isHighlighted = false;
       newMarkers[id] = marker;
     });
 
@@ -336,9 +423,9 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
 
     // Update ref with new markers
     markersRef.current = newMarkers;
-  }, [mapLoaded, createMarkerElement]);
+  }, [mapLoaded, createMarkerElement, onMarkerClick, highlightedPostId]);
 
-  // Update markers when map moves
+  // Update markers when map moves or highlighted post changes
   useEffect(() => {
     if (!map.current || !mapLoaded) return;
 
@@ -367,20 +454,7 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
         map.current.off("zoomend", handleMapChange);
       }
     };
-  }, [updateMarkers, mapLoaded]);
-
-  // Zoom controls
-  const handleZoomIn = () => {
-    if (map.current) {
-      map.current.zoomIn({ duration: 300 });
-    }
-  };
-
-  const handleZoomOut = () => {
-    if (map.current) {
-      map.current.zoomOut({ duration: 300 });
-    }
-  };
+  }, [updateMarkers, mapLoaded, highlightedPostId]);
 
   // Search handler
   const handleSearch = ({ lat, lng }) => {
@@ -400,14 +474,9 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
         <SearchBar onSearch={handleSearch} />
       </div>
 
-      {/* Status Filters - Left side vertical */}
-      <div className="absolute top-20 left-4 z-10">
+      {/* Status Filters - Top left corner */}
+      <div className="absolute top-4 left-4 z-10">
         <StatusFilter statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
-      </div>
-
-      {/* Zoom Controls - Right side */}
-      <div className="absolute top-20 right-4 z-10 hidden md:block">
-        <ZoomControls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
       </div>
 
       {/* Map Container */}
@@ -427,4 +496,6 @@ export default function MapContainer({ statusFilter, setStatusFilter, darkMode }
       `}</style>
     </div>
   );
-}
+});
+
+export default MapContainer;

@@ -1,7 +1,11 @@
 [
     {
         "report_id": "RPT001",
-        "imageUrl": "https://placehold.co/400x300/8B0000/white?text=Waste+Report+1",
+        "images": [
+            "https://placehold.co/400x300/8B0000/white?text=Waste+1A",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+1B",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+1C"
+        ],
         "latitude": 18.9226,
         "longitude": 72.8312,
         "location": "Colaba Causeway, Mumbai",
@@ -14,7 +18,10 @@
     },
     {
         "report_id": "RPT002",
-        "imageUrl": "https://placehold.co/400x300/FFD93D/333?text=Waste+Report+2",
+        "images": [
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+2A",
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+2B"
+        ],
         "latitude": 18.9219841,
         "longitude": 72.8346543,
         "location": "Gateway of India, Mumbai",
@@ -27,7 +34,12 @@
     },
     {
         "report_id": "RPT003",
-        "imageUrl": "https://placehold.co/400x300/6BCB77/white?text=Waste+Report+3",
+        "images": [
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+3A",
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+3B",
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+3C",
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+3D"
+        ],
         "latitude": 18.9440,
         "longitude": 72.8230,
         "location": "Marine Drive, Mumbai",
@@ -40,7 +52,10 @@
     },
     {
         "report_id": "RPT004",
-        "imageUrl": "https://placehold.co/400x300/8B0000/white?text=Waste+Report+4",
+        "images": [
+            "https://placehold.co/400x300/8B0000/white?text=Waste+4A",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+4B"
+        ],
         "latitude": 19.0596,
         "longitude": 72.8256,
         "location": "Bandra Bandstand, Mumbai",
@@ -53,7 +68,11 @@
     },
     {
         "report_id": "RPT005",
-        "imageUrl": "https://placehold.co/400x300/FFD93D/333?text=Waste+Report+5",
+        "images": [
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+5A",
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+5B",
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+5C"
+        ],
         "latitude": 19.0544,
         "longitude": 72.8369,
         "location": "Linking Road, Bandra",
@@ -66,7 +85,10 @@
     },
     {
         "report_id": "RPT006",
-        "imageUrl": "https://placehold.co/400x300/6BCB77/white?text=Waste+Report+6",
+        "images": [
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+6A",
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+6B"
+        ],
         "latitude": 19.0200,
         "longitude": 72.8250,
         "location": "Worli Sea Face, Mumbai",
@@ -79,7 +101,11 @@
     },
     {
         "report_id": "RPT007",
-        "imageUrl": "https://placehold.co/400x300/8B0000/white?text=Waste+Report+7",
+        "images": [
+            "https://placehold.co/400x300/8B0000/white?text=Waste+7A",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+7B",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+7C"
+        ],
         "latitude": 18.9823,
         "longitude": 72.8093,
         "location": "Haji Ali Dargah, Mumbai",
@@ -92,7 +118,10 @@
     },
     {
         "report_id": "RPT008",
-        "imageUrl": "https://placehold.co/400x300/FFD93D/333?text=Waste+Report+8",
+        "images": [
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+8A",
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+8B"
+        ],
         "latitude": 18.9941,
         "longitude": 72.8229,
         "location": "Mahalaxmi Temple, Mumbai",
@@ -105,7 +134,12 @@
     },
     {
         "report_id": "RPT009",
-        "imageUrl": "https://placehold.co/400x300/8B0000/white?text=Waste+Report+9",
+        "images": [
+            "https://placehold.co/400x300/8B0000/white?text=Waste+9A",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+9B",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+9C",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+9D"
+        ],
         "latitude": 19.0945,
         "longitude": 72.8260,
         "location": "Juhu Beach, Mumbai",
@@ -118,7 +152,10 @@
     },
     {
         "report_id": "RPT010",
-        "imageUrl": "https://placehold.co/400x300/6BCB77/white?text=Waste+Report+10",
+        "images": [
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+10A",
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+10B"
+        ],
         "latitude": 19.0813,
         "longitude": 72.8359,
         "location": "Santacruz Market, Mumbai",
@@ -131,7 +168,11 @@
     },
     {
         "report_id": "RPT011",
-        "imageUrl": "https://placehold.co/400x300/8B0000/white?text=Waste+Report+11",
+        "images": [
+            "https://placehold.co/400x300/8B0000/white?text=Waste+11A",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+11B",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+11C"
+        ],
         "latitude": 18.9967,
         "longitude": 72.8116,
         "location": "Lower Parel, Mumbai",
@@ -144,7 +185,10 @@
     },
     {
         "report_id": "RPT012",
-        "imageUrl": "https://placehold.co/400x300/FFD93D/333?text=Waste+Report+12",
+        "images": [
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+12A",
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+12B"
+        ],
         "latitude": 18.9398,
         "longitude": 72.8355,
         "location": "CST Station, Mumbai",
@@ -157,7 +201,11 @@
     },
     {
         "report_id": "RPT013",
-        "imageUrl": "https://placehold.co/400x300/6BCB77/white?text=Waste+Report+13",
+        "images": [
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+13A",
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+13B",
+            "https://placehold.co/400x300/6BCB77/white?text=Waste+13C"
+        ],
         "latitude": 19.0058,
         "longitude": 72.8201,
         "location": "Mahim Beach, Mumbai",
@@ -170,7 +218,10 @@
     },
     {
         "report_id": "RPT014",
-        "imageUrl": "https://placehold.co/400x300/8B0000/white?text=Waste+Report+14",
+        "images": [
+            "https://placehold.co/400x300/8B0000/white?text=Waste+14A",
+            "https://placehold.co/400x300/8B0000/white?text=Waste+14B"
+        ],
         "latitude": 18.9605,
         "longitude": 72.8350,
         "location": "Crawford Market, Mumbai",
@@ -183,7 +234,11 @@
     },
     {
         "report_id": "RPT015",
-        "imageUrl": "https://placehold.co/400x300/FFD93D/333?text=Waste+Report+15",
+        "images": [
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+15A",
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+15B",
+            "https://placehold.co/400x300/FFD93D/333?text=Waste+15C"
+        ],
         "latitude": 19.0184,
         "longitude": 72.8421,
         "location": "Dadar TT, Mumbai",
