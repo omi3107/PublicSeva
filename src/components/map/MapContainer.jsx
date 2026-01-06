@@ -149,9 +149,18 @@ const MapContainer = forwardRef(function MapContainer(
   // Update map style when dark mode changes
   useEffect(() => {
     if (map.current && mapLoaded) {
+
+      Object.values(markersRef.current).forEach((marker) => marker.remove());
+      markersRef.current = {};
+
       map.current.setStyle(getMapStyle(darkMode));
+
+      map.current.once("style.load", () => {
+        setMapLoaded(false);
+        setTimeout(() => setMapLoaded(true), 50);
+      });
     }
-  }, [darkMode, mapLoaded, getMapStyle]);
+  }, [darkMode]);
 
   // Create marker element
   const createMarkerElement = useCallback(
