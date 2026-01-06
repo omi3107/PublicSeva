@@ -208,3 +208,18 @@ json
 | Zoom animation jank | Use CSS transitions, requestAnimationFrame for smooth UX |
 
 ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

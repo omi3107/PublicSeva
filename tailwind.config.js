@@ -1,8 +1,16 @@
 module.exports = {
-  darkMode: "class",   // 👈 THIS LINE IS REQUIRED
+  darkMode: "class",
   content: ["./src/**/*.{js,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        status: {
+          untouched: '#8B0000',
+          progress: '#FFD93D',
+          resolved: '#6BCB77',
+        }
+      }
+    },
   },
   plugins: [],
 };

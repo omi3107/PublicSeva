@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Leaf,
   Camera,
@@ -62,9 +63,9 @@ export default function LandingPage() {
         </p>
 
         <div className="flex justify-center gap-4">
-          <button className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow transition">
+          <Link to="/map" className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow transition">
             Get Started
-          </button>
+          </Link>
           <button className="px-8 py-3 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
             Learn More
           </button>

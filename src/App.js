@@ -1,12 +1,19 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landingpage from "./components/pages/Landingpage.jsx";
+import MapPage from "./components/pages/MapPage.jsx";
+
 function App() {
   return (
-  <>
-  <Landingpage />
-  </>
-   
-    
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landingpage />} />
+        <Route path="/map" element={<MapPage />} />
+        {/* Placeholder routes for future pages */}
+        <Route path="/check-status" element={<Landingpage />} />
+        <Route path="/profile" element={<Landingpage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
