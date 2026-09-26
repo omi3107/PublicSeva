@@ -191,83 +191,177 @@ UI Updates
 
 ## 📸 Screenshots
 
-### Public Landing Page
-The landing page welcomes new users with a modern hero section, feature highlights, and role-based CTAs.
+A Pinterest-style gallery showcasing PublicSeva's intuitive interface and features:
 
-```
-[Landing Page Screenshot]
-- Hero section: "Report Waste. Track Action. Clean Communities."
-- Navigation with Login/Sign Up buttons
-- Feature cards highlighting Image Reporting, Live Location, Status Tracking
-- Role cards for Citizens and Authorities
-- Dark mode toggle in top navbar
-```
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h4>🏠 Landing Page</h4>
+      <p>Modern hero section with feature highlights and role-based call-to-action buttons. Includes dark mode toggle.</p>
+      <details>
+        <summary><b>View Details</b></summary>
+        • Hero heading: "Report Waste. Track Action. Clean Communities."<br>
+        • Navigation with Login/Sign Up buttons<br>
+        • Feature cards: Image Reporting, Live Location, Status Tracking, Eco Impact<br>
+        • Who is it for section (Citizens & Authorities)<br>
+        • Dark mode toggle in navbar
+      </details>
+      <br><br>
+      <img src="https://via.placeholder.com/400x500/2d7d4d/ffffff?text=Landing+Page" alt="Landing Page Screenshot" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    </td>
+    <td width="50%" valign="top">
+      <h4>🔐 Authentication Flow</h4>
+      <p>Secure login and comprehensive signup with location-based registration and role selection.</p>
+      <details>
+        <summary><b>View Details</b></summary>
+        <b>Login Page:</b><br>
+        • Email and password fields<br>
+        • Sign Up redirect link<br>
+        • Error validation<br>
+        <br>
+        <b>Signup Page:</b><br>
+        • Full name, email, phone fields<br>
+        • Address and location picker<br>
+        • State and district dropdowns<br>
+        • Role selection (Citizen/Admin)<br>
+        • Password strength validation
+      </details>
+      <br><br>
+      <img src="https://via.placeholder.com/400x500/1e40af/ffffff?text=Auth+Pages" alt="Authentication Screenshot" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h4>📋 Citizen Dashboard</h4>
+      <p>Issue feed displaying reported problems with engagement metrics and status tracking.</p>
+      <details>
+        <summary><b>View Details</b></summary>
+        • Navbar with navigation links (Home, Check Status, Map, Profile)<br>
+        • Welcome section with user stats<br>
+        • Issue feed with cards showing:<br>
+        &nbsp;&nbsp;- Issue title and description<br>
+        &nbsp;&nbsp;- Reporter avatar and name<br>
+        &nbsp;&nbsp;- Issue image thumbnail<br>
+        &nbsp;&nbsp;- Location badge with address<br>
+        &nbsp;&nbsp;- Vote count and comment count<br>
+        &nbsp;&nbsp;- Status badge (UNSOLVED/IN_PROGRESS/RESOLVED)<br>
+        &nbsp;&nbsp;- Time posted<br>
+        • Infinite scroll or pagination
+      </details>
+      <br><br>
+      <img src="https://via.placeholder.com/400x500/7c3aed/ffffff?text=Citizen+Home" alt="Citizen Dashboard Screenshot" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    </td>
+    <td width="50%" valign="top">
+      <h4>📸 Report Issue Form</h4>
+      <p>Intuitive multi-step form for submitting waste reports with image and location capture.</p>
+      <details>
+        <summary><b>View Details</b></summary>
+        • Image upload area with drag & drop support<br>
+        • Image preview display<br>
+        • Issue title text input<br>
+        • Detailed description textarea<br>
+        • Interactive map with draggable marker<br>
+        • Real-time coordinates display<br>
+        • Address optional text field<br>
+        • Submit button with loading state<br>
+        • Success/error toast notifications
+      </details>
+      <br><br>
+      <img src="https://via.placeholder.com/400x500/dc2626/ffffff?text=Report+Issue" alt="Report Issue Screenshot" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h4>🗺️ Interactive Map View</h4>
+      <p>MapLibre GL powered geospatial visualization for pinpointing exact issue locations.</p>
+      <details>
+        <summary><b>View Details</b></summary>
+        • Full-width interactive map<br>
+        • User's geolocation with blue marker<br>
+        • Draggable marker for location adjustment<br>
+        • Map controls (zoom, pan, fullscreen)<br>
+        • Real-time latitude/longitude display<br>
+        • Multiple markers for reported issues<br>
+        • Click markers to view issue preview<br>
+        • Map attribution
+      </details>
+      <br><br>
+      <img src="https://via.placeholder.com/400x500/0891b2/ffffff?text=Map+View" alt="Map View Screenshot" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    </td>
+    <td width="50%" valign="top">
+      <h4>⏱️ Status Tracking Page</h4>
+      <p>Real-time issue status monitoring and community engagement features.</p>
+      <details>
+        <summary><b>View Details</b></summary>
+        • Filter reported issues by status<br>
+        • Search by location or keywords<br>
+        • Sort by newest, most voted, most commented<br>
+        • Timeline view showing status progression<br>
+        • Issue details card with full description<br>
+        • Vote and comment sections<br>
+        • Admin response notes<br>
+        • Estimated resolution date<br>
+        • Share issue functionality
+      </details>
+      <br><br>
+      <img src="https://via.placeholder.com/400x500/06b6d4/ffffff?text=Status+Tracking" alt="Status Tracking Screenshot" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h4>👤 User Profile</h4>
+      <p>Personalized user profile with reporting history and account management.</p>
+      <details>
+        <summary><b>View Details</b></summary>
+        • User avatar and basic info<br>
+        • Profile statistics (issues reported, votes, comments)<br>
+        • Reported issues history<br>
+        • Edit profile option<br>
+        • Location and contact info<br>
+        • Account settings<br>
+        • Privacy preferences<br>
+        • Logout button
+      </details>
+      <br><br>
+      <img src="https://via.placeholder.com/400x500/ec4899/ffffff?text=User+Profile" alt="User Profile Screenshot" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    </td>
+    <td width="50%" valign="top">
+      <h4>🏛️ Admin Dashboard</h4>
+      <p>Comprehensive authority panel for monitoring and managing all reported issues.</p>
+      <details>
+        <summary><b>View Details</b></summary>
+        • Centralized issue management hub<br>
+        • Map view with all issue markers<br>
+        • Filterable issue list with:<br>
+        &nbsp;&nbsp;- Priority sorting (AI severity)<br>
+        &nbsp;&nbsp;- Status filtering<br>
+        &nbsp;&nbsp;- Location-based grouping<br>
+        &nbsp;&nbsp;- Date range filters<br>
+        • Bulk actions for status updates<br>
+        • Add admin notes and updates<br>
+        • Assign to cleanup teams<br>
+        • Analytics and reports<br>
+        • Export data option
+      </details>
+      <br><br>
+      <img src="https://via.placeholder.com/400x500/1f2937/ffffff?text=Admin+Dashboard" alt="Admin Dashboard Screenshot" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    </td>
+  </tr>
+</table>
 
-### Authentication Pages
-Professional login and signup flows with role selection and form validation.
+### Key UI Features Across Screens
 
-```
-[Login Page Screenshot]
-- Email and password input fields
-- "Sign Up" link for new users
-- Remember me checkbox
-- Error validation messages
-```
-
-```
-[Signup Page Screenshot]
-- Full name, email, phone, address fields
-- Location picker with geolocation
-- State and district selection
-- Role selection (Citizen/Admin)
-- Password strength indicator
-- Terms acceptance checkbox
-```
-
-### Citizen Dashboard
-The citizen home page displays reported issues in an engaging feed format.
-
-```
-[Citizen Home Screenshot]
-- Navbar with PublicSeva logo and navigation links
-- Welcome message with user stats
-- Issue feed with cards showing:
-  - Issue title and description
-  - Reporter name and time posted
-  - Image thumbnail
-  - Location badge
-  - Vote count and comment count
-  - Status badge (UNSOLVED/IN_PROGRESS/RESOLVED)
-- Dark mode applied
-```
-
-### Report Issue Page
-Intuitive form for citizens to report waste with multiple input methods.
-
-```
-[Report Issue Screenshot]
-- Image upload area with drag-and-drop
-- Issue title input field
-- Detailed description textarea
-- Interactive map with draggable marker
-- Current coordinates display
-- Address optional field
-- Submit button (linked to backend)
-- Footer with copyright
-```
-
-### Interactive Map Integration
-MapLibre GL powered map for precise location selection.
-
-```
-[Map Screenshot]
-- Full-width interactive map
-- Blue marker at user's geolocation
-- Draggable marker for fine-tuning location
-- Zoom in/out controls
-- Real-time latitude/longitude display
-- Attribution for map tiles provider
-```
+| Feature | Description | Implemented |
+|---------|-------------|-------------|
+| **Dark Mode** | Toggle between light and dark themes | ✅ |
+| **Responsive Design** | Mobile, tablet, and desktop optimized | ✅ |
+| **Geolocation** | Automatic and manual location selection | ✅ |
+| **Image Upload** | Drag & drop with preview | ✅ |
+| **Interactive Map** | Draggable markers and zoom controls | ✅ |
+| **Status Tracking** | Real-time issue status updates | ✅ |
+| **Voting System** | Community engagement with votes | ✅ |
+| **Comments** | Collaborative issue discussion | ✅ |
+| **Role-Based UI** | Separate citizen and admin views | ✅ |
 
 ---
 
